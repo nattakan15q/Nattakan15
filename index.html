@@ -3,23 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thailand Top Hits - จัดอันดับเพลงฮิต</title>
-    <!-- นำเข้าฟอนต์ภาษาไทย Prompt จาก Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <!-- นำเข้าไอคอนจาก FontAwesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Top 15 Music Hits | จัดอันดับเพลงฮิต</title>
+    <!-- โหลดฟอนต์ Prompt จาก Google Fonts เพื่อให้ภาษาไทยสวยงาม -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-color: #0f0f13;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --card-hover: rgba(255, 255, 255, 0.1);
-            --primary: #ff2a5f;
-            --primary-hover: #ff4d79;
-            --text-main: #ffffff;
-            --text-sub: #a1a1aa;
-        }
-
+        /* ตั้งค่าพื้นฐาน */
         * {
             box-sizing: border-box;
             margin: 0;
@@ -28,161 +17,318 @@
 
         body {
             font-family: 'Prompt', sans-serif;
-            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a24 100%);
-            color: var(--text-main);
+            color: #ffffff;
+            /* พื้นหลังเคลื่อนไหวแบบ Gradient */
+            background: linear-gradient(-45deg, #1e3c72, #2a5298, #61045f, #200122);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
             min-height: 100vh;
-            padding: 2rem 1rem;
         }
 
+        /* อนิเมชั่นสำหรับพื้นหลัง */
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* โครงสร้างหลัก */
         .container {
             max-width: 800px;
             margin: 0 auto;
+            padding: 40px 20px;
         }
 
-        header {
+        .header {
             text-align: center;
-            margin-bottom: 2.5rem;
-            animation: fadeInDown 0.8s ease;
+            margin-bottom: 40px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
         }
 
-        header h1 {
-            font-size: 2.5rem;
+        .header h1 {
+            font-size: 36px;
             font-weight: 700;
-            background: linear-gradient(45deg, #ff2a5f, #ff7e5f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin-bottom: 0.5rem;
+            margin-bottom: 10px;
+            letter-spacing: 2px;
         }
 
-        header p {
-            color: var(--text-sub);
-            font-size: 1.1rem;
+        .header p {
+            font-size: 16px;
+            opacity: 0.8;
         }
 
+        /* สไตล์ของกล่องเพลง (Glassmorphism) */
         .song-list {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 15px;
         }
 
         .song-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 1rem 1.5rem;
             display: flex;
             align-items: center;
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 16px;
+            padding: 15px 20px;
             transition: all 0.3s ease;
-            animation: fadeInUp 0.5s ease backwards;
+            cursor: pointer;
         }
 
         .song-card:hover {
-            background: var(--card-hover);
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.4);
         }
 
-        /* ตกแต่งอันดับที่ 1-3 ให้โดดเด่น */
+        /* อันดับ */
         .rank {
-            font-size: 1.5rem;
+            font-size: 32px;
             font-weight: 700;
-            width: 40px;
-            color: var(--text-sub);
+            width: 60px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.9);
+            text-shadow: 1px 1px 5px rgba(0,0,0,0.3);
         }
-        .song-card:nth-child(1) .rank { color: #ffd700; font-size: 2rem; } /* เหรียญทอง */
-        .song-card:nth-child(2) .rank { color: #c0c0c0; font-size: 1.8rem; } /* เหรียญเงิน */
-        .song-card:nth-child(3) .rank { color: #cd7f32; font-size: 1.6rem; } /* เหรียญทองแดง */
 
-        .cover-img {
+        /* รูปหน้าปก */
+        .cover {
             width: 70px;
             height: 70px;
             border-radius: 12px;
             object-fit: cover;
-            margin-right: 1.5rem;
+            margin-right: 20px;
             box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        .song-info {
+        /* ข้อมูลเพลง */
+        .info {
             flex-grow: 1;
         }
 
-        .song-title {
-            font-size: 1.2rem;
+        .title {
+            font-size: 18px;
             font-weight: 600;
-            margin-bottom: 0.3rem;
+            margin-bottom: 5px;
         }
 
-        .song-artist {
-            color: var(--text-sub);
-            font-size: 0.9rem;
+        .artist {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
         }
 
-        .vote-section {
+        /* ปุ่มเล่นเพลง (จำลอง) */
+        .play-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: white;
+            color: #1e3c72;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .song-card:hover .play-btn {
+            opacity: 1;
+        }
+
+        /* ตกแต่งอันดับ 1-3 เป็นพิเศษ */
+        .song-card:nth-child(1) .rank { color: #FFD700; text-shadow: 0 0 10px #FFD700; }
+        .song-card:nth-child(2) .rank { color: #C0C0C0; text-shadow: 0 0 10px #C0C0C0; }
+        .song-card:nth-child(3) .rank { color: #CD7F32; text-shadow: 0 0 10px #CD7F32; }
+
+        /*นี่คือโค้ด HTML พร้อม CSS ในตัวสำหรับสร้างเว็บไซต์จัดอันดับ 15 เพลงฮิตครับ 
+
+จุดเด่นของโค้ดนี้คือ:
+*   **ภาพพื้นหลังเคลื่อนไหว (Animated Gradient Background):** ใช้ CSS เปลี่ยนสีพื้นหลังไปมาอย่างนุ่มนวล
+*   **ดีไซน์แบบกระจก (Glassmorphism):** กล่องใส่เนื้อหามีความโปร่งแสง ดูหรูหราและทันสมัย
+*   **เอฟเฟกต์เมื่อชี้เมาส์ (Hover Effects):** เมื่อนำเมาส์ไปชี้ที่เพลง กล่องจะขยายขนาดขึ้นเล็กน้อย
+*   **รูปภาพใช้งานได้จริง:** ใช้บริการรูปภาพสุ่มจาก `picsum.photos` (สามารถเปลี่ยนลิงก์รูปเป็นรูปศิลปินจริงได้ในภายหลัง)
+*   **รองรับมือถือ (Responsive):** แสดงผลได้สวยงามทั้งบนคอมพิวเตอร์และโทรศัพท์มือถือ
+
+คุณสามารถคัดลอกโค้ดด้านล่างนี้ ไปวางในโปรแกรม Notepad แล้วกด Save As เป็นไฟล์ชื่อ `index.html` จากนั้นดับเบิลคลิกเพื่อเปิดดูในเบราว์เซอร์ได้เลยครับ
+
+```html
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top 15 Music Chart - จัดอันดับเพลงฮิต</title>
+    <!-- นำเข้าฟอนต์ Kanit จาก Google Fonts -->
+    <link href="[https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap](https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap)" rel="stylesheet">
+    <style>
+        /* ตั้งค่าเริ่มต้นและฟอนต์ */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Kanit', sans-serif;
+        }
+
+        /* พื้นหลังเคลื่อนไหว (Animated Gradient) */
+        body {
+            background: linear-gradient(-45deg, #141e30, #243b55, #4ca1af, #2c3e50);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            color: #ffffff;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* กล่องหลักแบบโปร่งแสง (Glassmorphism) */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2.8em;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.5);
+        }
+
+        .header p {
+            color: #b3c0d1;
+            margin-top: 10px;
+            font-size: 1.1em;
+        }
+
+        /* รายการเพลง */
+        .song-list {
             display: flex;
             flex-direction: column;
-            align-items: center;
-            min-width: 80px;
+            gap: 15px;
         }
 
-        .vote-count {
-            font-size: 1.1rem;
-            font-weight: 600;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-        }
-
-        .vote-btn {
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            border-radius: 20px;
-            padding: 0.4rem 1rem;
-            font-family: 'Prompt', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
+        .song-item {
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 15px 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
         }
 
-        .vote-btn:hover {
-            background: var(--primary);
-            color: white;
+        .song-item:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+            border-left: 5px solid #1db954; /* สีเขียวสไตล์แอปฟังเพลง */
         }
 
-        .vote-btn:active {
-            transform: scale(0.95);
+        /* อันดับ */
+        .rank {
+            font-size: 2.2em;
+            font-weight: 600;
+            color: #a0aec0;
+            width: 60px;
+            text-align: center;
+            margin-right: 15px;
         }
 
-        /* Animations */
-        @keyframes fadeInDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* ไฮไลท์อันดับ 1-3 */
+        .song-item:nth-child(1) .rank { color: #ffd700; text-shadow: 0 0 15px rgba(255, 215, 0, 0.5); font-size: 2.5em; } /* ทอง */
+        .song-item:nth-child(2) .rank { color: #e0e0e0; text-shadow: 0 0 10px rgba(224, 224, 224, 0.5); font-size: 2.4em; } /* เงิน */
+        .song-item:nth-child(3) .rank { color: #cd7f32; text-shadow: 0 0 10px rgba(205, 127, 50, 0.5); font-size: 2.3em; } /* ทองแดง */
+
+        /* รูปปกอัลบั้ม */
+        .cover {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            object-fit: cover;
+            margin-right: 25px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.5);
         }
 
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* รายละเอียดเพลง */
+        .details {
+            flex-grow: 1;
         }
 
-        /* Responsive */
+        .title {
+            font-size: 1.3em;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .artist {
+            font-size: 0.95em;
+            color: #b3c0d1;
+        }
+
+        /* ปุ่มเล่นเพลง */
+        .play-btn {
+            background: transparent;
+            color: #fff;
+            border: 2px solid #1db954;
+            padding: 8px 25px;
+            border-radius: 30px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .play-btn:hover {
+            background: #1db954;
+            color: #fff;
+            box-shadow: 0 0 15px rgba(29, 185, 84, 0.6);
+        }
+
+        /* ปรับแต่งหน้าจอขนาดเล็ก */
         @media (max-width: 600px) {
-            .song-card {
-                padding: 1rem;
-            }
-            .cover-img {
-                width: 50px;
-                height: 50px;
-                margin-right: 1rem;
-            }
-            .song-title {
-                font-size: 1rem;
+            .song-item {
+                flex-direction: column;
+                text-align: center;
+                padding: 20px;
             }
             .rank {
-                font-size: 1.2rem !important;
-                width: 30px;
+                width: auto;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            .cover {
+                margin-right: 0;
+                margin-bottom: 15px;
+                width: 120px;
+                height: 120px;
+            }
+            .play-btn {
+                margin-top: 15px;
+                width: 100%;
             }
         }
     </style>
@@ -190,84 +336,179 @@
 <body>
 
     <div class="container">
-        <header>
-            <h1><i class="fa-solid fa-fire-flame-curved"></i> Top 50 Hits</h1>
-            <p>อัปเดตเพลงฮิตประจำสัปดาห์ โหวตเพลงที่คุณชื่นชอบเลย!</p>
-        </header>
+        <div class="header">
+            <h1>Global Top 15 Tracks</h1>
+            <p>อัปเดตชาร์ตเพลงยอดฮิตประจำสัปดาห์</p>
+        </div>
 
-        <div class="song-list" id="songList">
-            <!-- ข้อมูลเพลงจะถูกสร้างด้วย JavaScript -->
+        <div class="song-list">
+            <!-- เพลงที่ 1 -->
+            <div class="song-item">
+                <div class="rank">1</div>
+                <img src="[https://picsum.photos/seed/song1/150/150](https://picsum.photos/seed/song1/150/150)" alt="Cover 1" class="cover">
+                <div class="details">
+                    <div class="title">Blinding Lights</div>
+                    <div class="artist">The Weeknd</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 2 -->
+            <div class="song-item">
+                <div class="rank">2</div>
+                <img src="[https://picsum.photos/seed/song2/150/150](https://picsum.photos/seed/song2/150/150)" alt="Cover 2" class="cover">
+                <div class="details">
+                    <div class="title">As It Was</div>
+                    <div class="artist">Harry Styles</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 3 -->
+            <div class="song-item">
+                <div class="rank">3</div>
+                <img src="[https://picsum.photos/seed/song3/150/150](https://picsum.photos/seed/song3/150/150)" alt="Cover 3" class="cover">
+                <div class="details">
+                    <div class="title">Cruel Summer</div>
+                    <div class="artist">Taylor Swift</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 4 -->
+            <div class="song-item">
+                <div class="rank">4</div>
+                <img src="[https://picsum.photos/seed/song4/150/150](https://picsum.photos/seed/song4/150/150)" alt="Cover 4" class="cover">
+                <div class="details">
+                    <div class="title">Shape of You</div>
+                    <div class="artist">Ed Sheeran</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 5 -->
+            <div class="song-item">
+                <div class="rank">5</div>
+                <img src="[https://picsum.photos/seed/song5/150/150](https://picsum.photos/seed/song5/150/150)" alt="Cover 5" class="cover">
+                <div class="details">
+                    <div class="title">Levitating</div>
+                    <div class="artist">Dua Lipa</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 6 -->
+            <div class="song-item">
+                <div class="rank">6</div>
+                <img src="[https://picsum.photos/seed/song6/150/150](https://picsum.photos/seed/song6/150/150)" alt="Cover 6" class="cover">
+                <div class="details">
+                    <div class="title">Kill Bill</div>
+                    <div class="artist">SZA</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 7 -->
+            <div class="song-item">
+                <div class="rank">7</div>
+                <img src="[https://picsum.photos/seed/song7/150/150](https://picsum.photos/seed/song7/150/150)" alt="Cover 7" class="cover">
+                <div class="details">
+                    <div class="title">Starboy</div>
+                    <div class="artist">The Weeknd, Daft Punk</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 8 -->
+            <div class="song-item">
+                <div class="rank">8</div>
+                <img src="[https://picsum.photos/seed/song8/150/150](https://picsum.photos/seed/song8/150/150)" alt="Cover 8" class="cover">
+                <div class="details">
+                    <div class="title">Peaches</div>
+                    <div class="artist">Justin Bieber, Daniel Caesar</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 9 -->
+            <div class="song-item">
+                <div class="rank">9</div>
+                <img src="[https://picsum.photos/seed/song9/150/150](https://picsum.photos/seed/song9/150/150)" alt="Cover 9" class="cover">
+                <div class="details">
+                    <div class="title">Good 4 U</div>
+                    <div class="artist">Olivia Rodrigo</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 10 -->
+            <div class="song-item">
+                <div class="rank">10</div>
+                <img src="[https://picsum.photos/seed/song10/150/150](https://picsum.photos/seed/song10/150/150)" alt="Cover 10" class="cover">
+                <div class="details">
+                    <div class="title">Dance Monkey</div>
+                    <div class="artist">Tones and I</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 11 -->
+            <div class="song-item">
+                <div class="rank">11</div>
+                <img src="[https://picsum.photos/seed/song11/150/150](https://picsum.photos/seed/song11/150/150)" alt="Cover 11" class="cover">
+                <div class="details">
+                    <div class="title">Sunflower</div>
+                    <div class="artist">Post Malone, Swae Lee</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 12 -->
+            <div class="song-item">
+                <div class="rank">12</div>
+                <img src="[https://picsum.photos/seed/song12/150/150](https://picsum.photos/seed/song12/150/150)" alt="Cover 12" class="cover">
+                <div class="details">
+                    <div class="title">Bad Guy</div>
+                    <div class="artist">Billie Eilish</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 13 -->
+            <div class="song-item">
+                <div class="rank">13</div>
+                <img src="[https://picsum.photos/seed/song13/150/150](https://picsum.photos/seed/song13/150/150)" alt="Cover 13" class="cover">
+                <div class="details">
+                    <div class="title">Butter</div>
+                    <div class="artist">BTS</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 14 -->
+            <div class="song-item">
+                <div class="rank">14</div>
+                <img src="[https://picsum.photos/seed/song14/150/150](https://picsum.photos/seed/song14/150/150)" alt="Cover 14" class="cover">
+                <div class="details">
+                    <div class="title">Stay</div>
+                    <div class="artist">The Kid LAROI, Justin Bieber</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
+            <!-- เพลงที่ 15 -->
+            <div class="song-item">
+                <div class="rank">15</div>
+                <img src="[https://picsum.photos/seed/song15/150/150](https://picsum.photos/seed/song15/150/150)" alt="Cover 15" class="cover">
+                <div class="details">
+                    <div class="title">Watermelon Sugar</div>
+                    <div class="artist">Harry Styles</div>
+                </div>
+                <button class="play-btn">Play</button>
+            </div>
+
         </div>
     </div>
 
-    <script>
-        // ข้อมูลจำลองของเพลง (สามารถเปลี่ยนชื่อเพลงและศิลปินได้)
-        let songs = [
-            { id: 1, title: "APT.", artist: "ROSÉ & Bruno Mars", votes: 15420, cover: "https://soundcloud.com/satoshijpn/rose-bruno-mars-apt-satoshi-remix" },
-            { id: 2, title: "ซ่อน(ไม่)หา (Ghost)", artist: "Jeff Satur", votes: 12350, cover: "https://genius.com/Jeff-satur-ghost-lyrics" },
-            { id: 3, title: "พี่ชอบหนูที่สุดเลย", artist: "PONCHET", votes: 10200, cover: "https://open.spotify.com/track/7mVobUmGP12Y5SQJgBice3" },
-            { id: 4, title: "Hit Me Hard and Soft", artist: "Billie Eilish", votes: 8900, cover: "https://open.spotify.com/album/7aJuG4TFXa2hmE4z1yxc3n" },
-            { id: 5, title: "ผู้ถูกเลือกให้ผิดหวัง", artist: "เรนิษรา", votes: 7540, cover: "https://open.spotify.com/track/28WUoGt6gycR4gWHdIOkKP" },
-            { id: 6, title: "Espresso", artist: "Sabrina Carpenter", votes: 6200, cover: "https://en.wikipedia.org/wiki/Espresso_%28song%29" }
-        ];
-
-        // ฟังก์ชันสำหรับจัดรูปแบบตัวเลข (เพิ่มลูกน้ำ)
-        const formatNumber = (num) => {
-            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-        };
-
-        // ฟังก์ชันแสดงผลรายการเพลง
-        function renderSongs() {
-            const songListContainer = document.getElementById('songList');
-            songListContainer.innerHTML = ''; // ล้างข้อมูลเดิม
-
-            // เรียงลำดับตามคะแนนโหวตจากมากไปน้อย
-            songs.sort((a, b) => b.votes - a.votes);
-
-            songs.forEach((song, index) => {
-                // สร้างการหน่วงเวลาอนิเมชันให้แสดงทีละอันดับ
-                const delay = index * 0.1; 
-                
-                const songCard = document.createElement('div');
-                songCard.className = 'song-card';
-                songCard.style.animationDelay = `${delay}s`;
-
-                songCard.innerHTML = `
-                    <div class="rank">${index + 1}</div>
-                    <img src="${song.cover}" alt="${song.title}" class="cover-img">
-                    <div class="song-info">
-                        <div class="song-title">${song.title}</div>
-                        <div class="song-artist">${song.artist}</div>
-                    </div>
-                    <div class="vote-section">
-                        <div class="vote-count" id="vote-count-${song.id}">${formatNumber(song.votes)}</div>
-                        <button class="vote-btn" onclick="voteSong(${song.id})">
-                            <i class="fa-solid fa-caret-up"></i> โหวต
-                        </button>
-                    </div>
-                `;
-
-                songListContainer.appendChild(songCard);
-            });
-        }
-
-        // ฟังก์ชันเมื่อกดปุ่มโหวต
-        function voteSong(id) {
-            // หาเพลงที่ถูกกดโหวต
-            const songIndex = songs.findIndex(s => s.id === id);
-            
-            if (songIndex !== -1) {
-                // เพิ่มคะแนน (สุ่มเพิ่มทีละ 10-50 คะแนนเพื่อให้ดูตื่นเต้น)
-                const addVotes = Math.floor(Math.random() * 41) + 10;
-                songs[songIndex].votes += addVotes;
-                
-                // รีเรนเดอร์หน้าจอใหม่เพื่อจัดอันดับทันที
-                renderSongs();
-            }
-        }
-
-        // โหลดข้อมูลครั้งแรกเมื่อเปิดเว็บ
-        window.onload = renderSongs;
-    </script>
 </body>
 </html>
