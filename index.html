@@ -3,66 +3,271 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ข้อมูลนิสิต</title>
+    <title>Thailand Top Hits - จัดอันดับเพลงฮิต</title>
+    <!-- นำเข้าฟอนต์ภาษาไทย Prompt จาก Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- นำเข้าไอคอนจาก FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body {
-            font-family: 'Sarabun', Arial, sans-serif;
-            background-color: #f4f6f9;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
+        :root {
+            --bg-color: #0f0f13;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --card-hover: rgba(255, 255, 255, 0.1);
+            --primary: #ff2a5f;
+            --primary-hover: #ff4d79;
+            --text-main: #ffffff;
+            --text-sub: #a1a1aa;
+        }
+
+        * {
+            box-sizing: border-box;
             margin: 0;
+            padding: 0;
         }
-        .profile-card {
-            background-color: #ffffff;
-            padding: 30px;
+
+        body {
+            font-family: 'Prompt', sans-serif;
+            background: linear-gradient(135deg, var(--bg-color) 0%, #1a1a24 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: linear-gradient(45deg, #ff2a5f, #ff7e5f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        header p {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+        }
+
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .song-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.5s ease backwards;
+        }
+
+        .song-card:hover {
+            background: var(--card-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* ตกแต่งอันดับที่ 1-3 ให้โดดเด่น */
+        .rank {
+            font-size: 1.5rem;
+            font-weight: 700;
+            width: 40px;
+            color: var(--text-sub);
+        }
+        .song-card:nth-child(1) .rank { color: #ffd700; font-size: 2rem; } /* เหรียญทอง */
+        .song-card:nth-child(2) .rank { color: #c0c0c0; font-size: 1.8rem; } /* เหรียญเงิน */
+        .song-card:nth-child(3) .rank { color: #cd7f32; font-size: 1.6rem; } /* เหรียญทองแดง */
+
+        .cover-img {
+            width: 70px;
+            height: 70px;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            width: 320px;
+            object-fit: cover;
+            margin-right: 1.5rem;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
-        .profile-card h2 {
-            margin-top: 0;
-            color: #2c3e50;
-            border-bottom: 2px solid #3498db;
-            padding-bottom: 10px;
-            font-size: 22px;
+
+        .song-info {
+            flex-grow: 1;
         }
-        .info-group {
-            margin-bottom: 12px;
+
+        .song-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.3rem;
         }
-        .label {
-            font-weight: bold;
-            color: #7f8c8d;
-            font-size: 14px;
+
+        .song-artist {
+            color: var(--text-sub);
+            font-size: 0.9rem;
         }
-        .value {
-            color: #2c3e50;
-            font-size: 16px;
-            margin-top: 2px;
+
+        .vote-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 80px;
+        }
+
+        .vote-count {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary);
+        }
+
+        .vote-btn {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            border-radius: 20px;
+            padding: 0.4rem 1rem;
+            font-family: 'Prompt', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .vote-btn:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .vote-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            .song-card {
+                padding: 1rem;
+            }
+            .cover-img {
+                width: 50px;
+                height: 50px;
+                margin-right: 1rem;
+            }
+            .song-title {
+                font-size: 1rem;
+            }
+            .rank {
+                font-size: 1.2rem !important;
+                width: 30px;
+            }
         }
     </style>
 </head>
 <body>
 
-    <div class="profile-card">
-        <h2>ข้อมูลนิสิต</h2>
-        
-        <div class="info-group">
-            <div class="label">ชื่อ-นามสกุล</div>
-            <div class="value">นางสาว ณัฐกานต์ ตาทอง</div>
-        </div>
-        
-        <div class="info-group">
-            <div class="label">รหัสนิสิต</div>
-            <div class="value">66011211162</div>
-        </div>
-        
-        <div class="info-group">
-            <div class="label">สาขาวิชา</div>
-            <div class="value">เทคโนโลยีสารสนเทศ</div>
+    <div class="container">
+        <header>
+            <h1><i class="fa-solid fa-fire-flame-curved"></i> Top 50 Hits</h1>
+            <p>อัปเดตเพลงฮิตประจำสัปดาห์ โหวตเพลงที่คุณชื่นชอบเลย!</p>
+        </header>
+
+        <div class="song-list" id="songList">
+            <!-- ข้อมูลเพลงจะถูกสร้างด้วย JavaScript -->
         </div>
     </div>
 
+    <script>
+        // ข้อมูลจำลองของเพลง (สามารถเปลี่ยนชื่อเพลงและศิลปินได้)
+        let songs = [
+            { id: 1, title: "APT.", artist: "ROSÉ & Bruno Mars", votes: 15420, cover: "https://via.placeholder.com/150/ff2a5f/ffffff?text=APT" },
+            { id: 2, title: "ซ่อน(ไม่)หา (Ghost)", artist: "Jeff Satur", votes: 12350, cover: "https://via.placeholder.com/150/1a1a24/ffffff?text=Ghost" },
+            { id: 3, title: "พี่ชอบหนูที่สุดเลย", artist: "PONCHET", votes: 10200, cover: "https://via.placeholder.com/150/4a90e2/ffffff?text=PON" },
+            { id: 4, title: "Hit Me Hard and Soft", artist: "Billie Eilish", votes: 8900, cover: "https://via.placeholder.com/150/2ecc71/ffffff?text=BIE" },
+            { id: 5, title: "ผู้ถูกเลือกให้ผิดหวัง", artist: "เรนิษรา", votes: 7540, cover: "https://via.placeholder.com/150/e67e22/ffffff?text=SAD" },
+            { id: 6, title: "Espresso", artist: "Sabrina Carpenter", votes: 6200, cover: "https://via.placeholder.com/150/9b59b6/ffffff?text=ESP" }
+        ];
+
+        // ฟังก์ชันสำหรับจัดรูปแบบตัวเลข (เพิ่มลูกน้ำ)
+        const formatNumber = (num) => {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        };
+
+        // ฟังก์ชันแสดงผลรายการเพลง
+        function renderSongs() {
+            const songListContainer = document.getElementById('songList');
+            songListContainer.innerHTML = ''; // ล้างข้อมูลเดิม
+
+            // เรียงลำดับตามคะแนนโหวตจากมากไปน้อย
+            songs.sort((a, b) => b.votes - a.votes);
+
+            songs.forEach((song, index) => {
+                // สร้างการหน่วงเวลาอนิเมชันให้แสดงทีละอันดับ
+                const delay = index * 0.1; 
+                
+                const songCard = document.createElement('div');
+                songCard.className = 'song-card';
+                songCard.style.animationDelay = `${delay}s`;
+
+                songCard.innerHTML = `
+                    <div class="rank">${index + 1}</div>
+                    <img src="${song.cover}" alt="${song.title}" class="cover-img">
+                    <div class="song-info">
+                        <div class="song-title">${song.title}</div>
+                        <div class="song-artist">${song.artist}</div>
+                    </div>
+                    <div class="vote-section">
+                        <div class="vote-count" id="vote-count-${song.id}">${formatNumber(song.votes)}</div>
+                        <button class="vote-btn" onclick="voteSong(${song.id})">
+                            <i class="fa-solid fa-caret-up"></i> โหวต
+                        </button>
+                    </div>
+                `;
+
+                songListContainer.appendChild(songCard);
+            });
+        }
+
+        // ฟังก์ชันเมื่อกดปุ่มโหวต
+        function voteSong(id) {
+            // หาเพลงที่ถูกกดโหวต
+            const songIndex = songs.findIndex(s => s.id === id);
+            
+            if (songIndex !== -1) {
+                // เพิ่มคะแนน (สุ่มเพิ่มทีละ 10-50 คะแนนเพื่อให้ดูตื่นเต้น)
+                const addVotes = Math.floor(Math.random() * 41) + 10;
+                songs[songIndex].votes += addVotes;
+                
+                // รีเรนเดอร์หน้าจอใหม่เพื่อจัดอันดับทันที
+                renderSongs();
+            }
+        }
+
+        // โหลดข้อมูลครั้งแรกเมื่อเปิดเว็บ
+        window.onload = renderSongs;
+    </script>
 </body>
 </html>
